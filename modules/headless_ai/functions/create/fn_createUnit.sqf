@@ -42,7 +42,13 @@ _unit setPosATL _pos;
 if (_gear isEqualType "") then {
     [_unit, _gear] call EFUNC(FW,gearScript);
 } else {
+    _facewear = _gear select 7;
     _unit setUnitLoadout _gear;
+    [{
+        params ["_unit", "_facewear"];
+        removeGoggles _unit;
+        _unit addGoggles _facewear;
+    }, [_unit, _facewear], 1] call CBA_fnc_waitAndExecute;
 };
 
 if (_vectorDir isNotEqualTo []) then {
